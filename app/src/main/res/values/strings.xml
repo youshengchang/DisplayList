@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Catalog</string>
+    <string name="get_data">Get data</string>
+    <string name="flower_name_placeholder">Flower name</string>
+
+</resources>
