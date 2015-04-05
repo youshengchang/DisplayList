@@ -63,11 +63,8 @@ public class MainActivity extends ListActivity {
 
 	protected void updateDisplay() {
 		//Use FlowerAdapter to display data
-//        if(flowerList == null)
-//            return;
-//        for(Flower flower: flowerList){
-//            output.append(flower.getName() + "\n");
-//        }
+        FlowerAdapter adapter = new FlowerAdapter(this, R.layout.item_flower, flowerList);
+        setListAdapter(adapter);
 	}
 	
 	protected boolean isOnline() {

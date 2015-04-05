@@ -9,18 +9,18 @@
         <dex dex="/Users/youshengchang/AndroidStudioProjects/DisplayList/app/build/intermediates/pre-dexed/debug/classes-45a655aa9741450f8cf728f73c22a1f8f7886f48.jar" />
     </item>
     <item
-        jar="/Users/youshengchang/AndroidStudioProjects/DisplayList/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/youshengchang/AndroidStudioProjects/DisplayList/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-66641856e9a1ef1eb0abfbc5edd3644571a1a62c.jar" />
-    </item>
-    <item
         jar="/Users/youshengchang/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
         <dex dex="/Users/youshengchang/AndroidStudioProjects/DisplayList/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-da8ad99330849f3485026c7bb7cd5863a0e9c663.jar" />
+    </item>
+    <item
+        jar="/Users/youshengchang/AndroidStudioProjects/DisplayList/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/youshengchang/AndroidStudioProjects/DisplayList/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-66641856e9a1ef1eb0abfbc5edd3644571a1a62c.jar" />
     </item>
 
 </items>
