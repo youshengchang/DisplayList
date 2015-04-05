@@ -26,7 +26,7 @@ import com.hanselandpetal.catalog.parsers.FlowerJSONParser;
 
 public class MainActivity extends ListActivity {
 
-    private static final  String PHOTOS_BASE_URL = "http://services.hanselandpetal.com/photos/";
+    public static final  String PHOTOS_BASE_URL = "http://services.hanselandpetal.com/photos/";
 
 	TextView output;
 	ProgressBar pb;
@@ -100,18 +100,18 @@ public class MainActivity extends ListActivity {
 			String content = HttpManager.getData(params[0], "feeduser", "feedpassword");
             flowerList = FlowerJSONParser.parseFeed(content);
 
-            for(Flower flower: flowerList){
-                try{
-                    String imageUrl = PHOTOS_BASE_URL + flower.getPhoto();
-                    InputStream in = (InputStream) new URL(imageUrl).getContent();
-                    Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    flower.setBitmap(bitmap);
-                    in.close();
-
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
+//            for(Flower flower: flowerList){
+//                try{
+//                    String imageUrl = PHOTOS_BASE_URL + flower.getPhoto();
+//                    InputStream in = (InputStream) new URL(imageUrl).getContent();
+//                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+//                    flower.setBitmap(bitmap);
+//                    in.close();
+//
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
 			return flowerList;
 		}
 
