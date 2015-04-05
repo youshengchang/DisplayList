@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,20 @@ import com.hanselandpetal.catalog.model.Flower;
 public class FlowerAdapter extends ArrayAdapter<Flower> {
 
 	private Context context;
-	@SuppressWarnings("unused")
+
 	private List<Flower> flowerList;
+
+    private LruCache<Integer, Bitmap> imageCache;
 
 	public FlowerAdapter(Context context, int resource, List<Flower> objects) {
 		super(context, resource, objects);
 		this.context = context;
 		this.flowerList = objects;
+
+        final int maxMemory = (int)(Runtime.getRuntime().maxMemory()/1024);
+        final int cacheSize = maxMemory/8;
+        imageCache = new LruCache<>(cacheSize);
+
 	}
 
 	@Override
@@ -42,8 +50,9 @@ public class FlowerAdapter extends ArrayAdapter<Flower> {
         TextView tv = (TextView) view.findViewById(R.id.textView1);
 		tv.setText(flower.getName());
 
-        //Display the flower imaage in the imageView widget
-        if(flower.getBitmap() != null){
+        //Display the flower image in the imageView widget
+        Bitmap bitmap = imageCache.get(flower.getProductId());
+        if(bitmap != null){
             ImageView image = (ImageView) view.findViewById(R.id.imageView1);
             image.setImageBitmap(flower.getBitmap());
         }else{
@@ -92,7 +101,8 @@ public class FlowerAdapter extends ArrayAdapter<Flower> {
         protected void onPostExecute(FlowerAndView flowerAndView) {
             ImageView image = (ImageView) flowerAndView.view.findViewById(R.id.imageView1);
             image.setImageBitmap(flowerAndView.bitmap);
-            flowerAndView.flower.setBitmap(flowerAndView.bitmap);
+            //flowerAndView.flower.setBitmap(flowerAndView.bitmap);
+            imageCache.put(flowerAndView.flower.getProductId(), flowerAndView.bitmap);
         }
     }
 
