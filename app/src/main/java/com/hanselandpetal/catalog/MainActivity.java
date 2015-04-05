@@ -1,10 +1,15 @@
 package com.hanselandpetal.catalog;
 
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -20,6 +25,8 @@ import com.hanselandpetal.catalog.model.Flower;
 import com.hanselandpetal.catalog.parsers.FlowerJSONParser;
 
 public class MainActivity extends ListActivity {
+
+    private static final  String PHOTOS_BASE_URL = "http://services.hanselandpetal.com/photos/";
 
 	TextView output;
 	ProgressBar pb;
@@ -77,7 +84,7 @@ public class MainActivity extends ListActivity {
 		}
 	}
 	
-	private class MyTask extends AsyncTask<String, String, String> {
+	private class MyTask extends AsyncTask<String, String, List<Flower>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -88,30 +95,46 @@ public class MainActivity extends ListActivity {
 		}
 		
 		@Override
-		protected String doInBackground(String... params) {
-			
-			String content = HttpManager.getData(params[0], "feeduser", "feedpassword");
-			return content;
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			
-			tasks.remove(this);
-			if (tasks.size() == 0) {
-				pb.setVisibility(View.INVISIBLE);
-			}
-			
-			if (result == null) {
-				Toast.makeText(MainActivity.this, "Web service not available", Toast.LENGTH_LONG).show();
-				return;
-			}
-			
-			flowerList = FlowerJSONParser.parseFeed(result);
-			updateDisplay();
+		protected List<Flower> doInBackground(String... params) {
 
+			String content = HttpManager.getData(params[0], "feeduser", "feedpassword");
+            flowerList = FlowerJSONParser.parseFeed(content);
+
+            for(Flower flower: flowerList){
+                try{
+                    String imageUrl = PHOTOS_BASE_URL + flower.getPhoto();
+                    InputStream in = (InputStream) new URL(imageUrl).getContent();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    flower.setBitmap(bitmap);
+                    in.close();
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+			return flowerList;
 		}
-		
-	}
+
+        @Override
+        protected void onPostExecute(List<Flower> result) {
+
+            tasks.remove(this);
+            if (tasks.size() == 0) {
+                pb.setVisibility(View.INVISIBLE);
+            }
+
+            if (result == null) {
+                Toast.makeText(MainActivity.this, "Web service not available", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            flowerList = result;
+            updateDisplay();
+
+        }
+
+
+
+    }
 
 }
